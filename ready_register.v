@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-
+//ready打拍；
 module ready_register#(parameter WIDTH = 8) (
 	input			clk,
 	input			rst,
@@ -15,7 +15,6 @@ module ready_register#(parameter WIDTH = 8) (
   reg	[WIDTH-1:0]	reg_data;
   reg			reg_valid;
 
-
   always @(posedge clk) begin
 	if (rst)  
 		reg_data <= {WIDTH{1'b0}};
@@ -24,7 +23,8 @@ module ready_register#(parameter WIDTH = 8) (
  	else 
 		reg_data <= reg_data;
   end
-
+//缓存信号拉高，reg_data将存入m_data，否则保持；
+	
   always @(posedge clk) begin
 	if (rst)  
 		reg_valid <= 1'b0;
@@ -33,21 +33,22 @@ module ready_register#(parameter WIDTH = 8) (
 	else
 		reg_valid <= reg_signal;
   end
-//Note: If now buffer has data, then next valid would be ~READY_DOWN:   
-//If downstream is ready, next cycle will be un-valid.    
-//If downstream is not ready, keeping high. 
-// If now buffer has no data, then next valid would be store_data, 1 for store;
+//如果寄存器已存入缓存数据，那么reg_valid取决于~s_ready；
+//若s_ready拉高, 那么数据将被下行接收，reg_valid将拉低；  
+//若s_ready拉低, 那么数据将留在reg，reg_valid将拉高；
+//如果寄存器已没有缓存数据，那么reg_valid取决于reg_signal，有缓存信号就拉高；
  
   always @(posedge clk) begin
 	if (rst) 
 		m_ready <= 1'b0; //Reset can be 1.
-	else m_ready <= s_ready || (~reg_valid && ~reg_signal); //Bubule clampping
+	  else m_ready <= s_ready || (~reg_valid && ~reg_signal);
   end
-//Downstream valid and data.
-//Bypass
+//m_ready由下行s_ready和reg的缓存状态决定；
+//也可以在reg中没有缓存数据也没有将缓存数据的信号时，直接拉高，先缓存一级数据。可以消除burst气泡；
+//因为即使slave没有ready，reg也可以拉高m_ready，先缓存一级数据。可以消除burst气泡；
 
-  assign reg_signal = m_ready && m_valid && ~s_ready;
+  assign reg_signal = m_ready && m_valid && ~s_ready;//能够缓存一级数据的信号；
   assign s_valid = m_ready ? m_valid : reg_valid;
   assign s_data  = m_ready ? m_data  : reg_data;
-
+	
 endmodule
