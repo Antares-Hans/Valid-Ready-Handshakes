@@ -36,6 +36,7 @@ module master#(parameter WIDTH = 8)(
 		else if (valid && ready)
 			addr <= addr + 8'b1;
 		else addr <= addr; 
-        end	  end
+	end	
+  end
 
 endmodule
