@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-
+//valid打拍；
 module valid_register#(parameter WIDTH = 8)(
 	input 			clk,
 	input 			rst,
@@ -19,7 +19,8 @@ module valid_register#(parameter WIDTH = 8)(
    	else
 		s_valid <=s_valid;
   end
- 
+//m_ready为高，s_valid传递，否则保持；
+	
   always @(posedge clk)begin
    	if (rst)
        		s_data <= 'd0;
@@ -28,7 +29,8 @@ module valid_register#(parameter WIDTH = 8)(
 	else 
 		s_data<=s_data;
   end
+//握手成功，s_data传递，否则保持；
  
-  assign m_ready = s_ready || ~s_valid;
+  assign m_ready = s_ready || ~s_valid;//无气泡传输；
 
 endmodule
