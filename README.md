@@ -1,8 +1,4 @@
-Valid-Ready Handshakes描述:
-
-a) 总线master发出data信号，同时master用valid信号拉高表示data有效；
-b) 总线slave发出ready信号，ready信号拉高表示slave可以接收数据；
-c) 当valid和slave同时为高时，表示data信号从master到slave发送接收成功。
+Valid-Ready Handshakes:
 
 1. valid_register.v和ready_register.v分别为实现对Valid和ready信号打拍的模块；
 2. top_module.v为顶层模块，handshakes_tb.sv为Testbench；
