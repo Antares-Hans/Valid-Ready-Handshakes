@@ -32,7 +32,7 @@ module handshakes_tb ();
 //start
 	#20 	valid_en = 1'b0;
 	#20 	valid_en = 1'b0;
-//nomal
+//normal
 	#20	valid_en = 1'b1;
 	#20	valid_en = 1'b1;
 	#20	valid_en = 1'b1;
@@ -52,7 +52,7 @@ module handshakes_tb ();
 	#20	valid_en = 1'b0;
 	#20	valid_en = 1'b1;
 	#20	valid_en = 1'b1;
-//master_idle, reg_passthrough
+//master_idle, passthrough
 	#20	valid_en = 1'b0;
 	#20	valid_en = 1'b0;
 	#20	valid_en = 1'b1;
@@ -85,7 +85,7 @@ module handshakes_tb ();
 //start
 	#20 	ready_en = 1'b1;
 	#20  	ready_en = 1'b1;
-//nomal
+//normal
 	#20  	ready_en = 1'b1;
 	#20  	ready_en = 1'b1;
 	#20 	ready_en = 1'b1;
