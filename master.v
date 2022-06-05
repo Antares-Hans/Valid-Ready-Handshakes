@@ -38,5 +38,6 @@ module master#(parameter WIDTH = 8)(
 		else addr <= addr; 
 	end	
   end
+//通过addr访问memory取数据；
 
 endmodule
