@@ -10,7 +10,55 @@ module ready_register#(parameter WIDTH = 8) (
         input              	s_ready,
         output	[WIDTH-1:0] 	s_data
         );
+  reg 			reg_full;         
+  reg 			reg_valid;
+  reg 	[WIDTH-1:0] 	reg_data;   
+  wire 			reg_ready;    
+      
+  always @(posedge clk) begin 
+   	if (rst) begin
+		reg_full <= 0 ;
+		s_valid <= 0;
+		s_data <= {WIDTH{1'b0}};
+	end
 
+   	else if(!reg_full) begin          
+            	if (reg_ready) begin
+             		s_valid <= m_valid;
+			s_data <= m_data;               
+            	end
+            	else begin
+              		reg_valid <= m_valid;
+			reg_data <= m_data;
+               		reg_full <= !reg_full;
+            	end
+           end
+	   else begin 
+		if(reg_ready) begin
+            		s_valid <= reg_valid;
+			s_data <= reg_data;              
+               		reg_full <= !reg_full;
+		end
+		else begin
+			s_valid <= s_valid;
+			s_data <= s_data;              
+               		reg_full <= reg_full;
+		end             
+           end
+  end
+
+  always @(posedge clk) begin
+	if (rst) 
+		m_ready <= 1'b1; 
+	else 	
+		m_ready <= reg_ready;
+  end
+
+  assign reg_ready = s_ready || ~s_valid; 
+	
+endmodule
+	
+/*
   wire			reg_signal;
   reg	[WIDTH-1:0]	reg_data;
   reg			reg_valid;
@@ -50,5 +98,6 @@ module ready_register#(parameter WIDTH = 8) (
   assign reg_signal = m_ready && m_valid && ~s_ready;//能够缓存一级数据的信号；
   assign s_valid = m_ready ? m_valid : reg_valid;
   assign s_data  = m_ready ? m_data  : reg_data;
-	
-endmodule
+ 
+ endmodule
+*/	
