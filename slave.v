@@ -22,7 +22,7 @@ module slave#(parameter WIDTH = 8)(
         else if (valid && ready)
             	sdata_out <= sdata_in;              
         else 
-            	sdata_out <= {WIDTH{1'b0}};
+            	sdata_out <= sdata_out;
   end      
 
 endmodule
