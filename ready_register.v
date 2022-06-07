@@ -5,10 +5,10 @@ module ready_register#(parameter WIDTH = 8) (
 	input			rst,
 	input			m_valid,
         output	reg		m_ready,
-        input	[WIDTH-1:0]  	m_data,
-        output             	s_valid,
+        input	   [WIDTH-1:0]  m_data,
+        output  reg      	s_valid,
         input              	s_ready,
-        output	[WIDTH-1:0] 	s_data
+        output	reg[WIDTH-1:0] 	s_data
         );
   reg 			reg_full;         
   reg 			reg_valid;
@@ -59,6 +59,17 @@ module ready_register#(parameter WIDTH = 8) (
 endmodule
 	
 /* valid和data可为组合逻辑不打拍输出；
+module ready_register#(parameter WIDTH = 8) (
+	input			clk,
+	input			rst,
+	input			m_valid,
+        output	reg		m_ready,
+        input	[WIDTH-1:0]  	m_data,
+        output             	s_valid,
+        input              	s_ready,
+        output	[WIDTH-1:0] 	s_data
+        );
+	
   wire			reg_signal;
   reg	[WIDTH-1:0]	reg_data;
   reg			reg_valid;
