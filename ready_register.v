@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-//ready打拍；
+//ready打拍；valid和data可为寄存器输出，也将打拍；
 module ready_register#(parameter WIDTH = 8) (
 	input			clk,
 	input			rst,
@@ -58,7 +58,7 @@ module ready_register#(parameter WIDTH = 8) (
 	
 endmodule
 	
-/*
+/* valid和data可为组合逻辑不打拍输出；
   wire			reg_signal;
   reg	[WIDTH-1:0]	reg_data;
   reg			reg_valid;
