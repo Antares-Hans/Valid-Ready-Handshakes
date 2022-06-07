@@ -77,7 +77,7 @@ module top_handshakes#( parameter WIDTH = 8)(
 	);
 */
 
-/*ready打拍;
+/*ready打拍；valid如不打拍，要用组合逻辑输出valid和data;
   master master_test(
 	.clk(clk), 
 	.rst(rst), 
@@ -111,7 +111,7 @@ module top_handshakes#( parameter WIDTH = 8)(
 	);
 */
 
-//valid和ready都打拍;
+//valid和ready都打拍，寄存器输出valid和data;
   wire 			valid_connect;
   wire 			ready_connect;
   wire  [WIDTH-1:0] 	data_connect;
@@ -126,7 +126,7 @@ module top_handshakes#( parameter WIDTH = 8)(
 	.mdata_out(m_data_out), 
 	.addr(addr)
 	);
-
+/*
   valid_register valid_register_test(
 	.clk(clk), 
 	.rst(rst), 
@@ -144,6 +144,17 @@ module top_handshakes#( parameter WIDTH = 8)(
 	.m_valid(valid_connect), 
 	.m_ready(ready_connect), 
 	.m_data(data_connect), 
+	.s_valid(s_valid), 
+	.s_ready(s_ready),
+	.s_data (s_data_in)
+	);
+*/
+  ready_register ready_register_test(
+	.clk(clk), 
+	.rst(rst), 
+	.m_valid(m_valid), 
+	.m_ready(m_ready), 
+	.m_data(m_data_out), 
 	.s_valid(s_valid), 
 	.s_ready(s_ready),
 	.s_data (s_data_in)
