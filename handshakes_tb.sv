@@ -21,7 +21,7 @@ module handshakes_tb ();
 	rst = 1'b1;
 	#20 rst = 1'b0;
  	foreach (mem_test.memory[i]) begin
-		mem_test.memory[i]=i;
+		mem_test.memory[i]=i+1;
 	end
   end
 
