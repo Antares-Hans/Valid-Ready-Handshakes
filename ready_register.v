@@ -20,6 +20,7 @@ module ready_register#(parameter WIDTH = 8) (
 		reg_full <= 0 ;
 		s_valid <= 0;
 		s_data <= {WIDTH{1'b0}};
+		reg_data <= {WIDTH{1'b0}};
 	end
 
    	else if(!reg_full) begin          
