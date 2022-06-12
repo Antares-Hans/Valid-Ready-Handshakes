@@ -17,7 +17,7 @@ module valid_register#(parameter WIDTH = 8)(
    	else if (m_ready)
 		s_valid <= m_valid;
    	else
-		s_valid <=s_valid;
+		s_valid <= s_valid;
   end
 //m_ready为高，s_valid传递，否则保持；
 	
@@ -27,7 +27,7 @@ module valid_register#(parameter WIDTH = 8)(
    	else if (m_valid && m_ready)
        		s_data <=  m_data;
 	else 
-		s_data<=s_data;
+		s_data <= s_data;
   end
 //握手成功，s_data传递，否则保持；
  
